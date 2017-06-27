@@ -1,0 +1,29 @@
+version: '3'
+services:
+  worker:
+    image: mschultz/worker
+    depends_on:
+      - redis
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+  redis:
+    image: redis:3.2-alpine
+    deploy:
+      restart_policy:
+        condition: on-failure
+  monitor:
+    image: mschultz/monitor
+    ports:
+      - 4000:3000
+    deploy:
+      restart_policy:
+        condition: on-failure
+  dispatcher:
+    image: mschultz/dispatcher
+    ports:
+      - 3000:3000
+    deploy:
+      restart_policy:
+        condition: on-failure

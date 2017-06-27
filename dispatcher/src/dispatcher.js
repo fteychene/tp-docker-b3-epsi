@@ -50,7 +50,7 @@ app.get('/history', (req, res) => {
         })
 })
 
-app.get('/status', (req, res) => res.json({"Status": "Ok"})) 
+app.get('/status', (req, res) => res.json({"Status": "Ok"}))
 
 app.listen(3000, function () {
   console.log('Fibonacci dispatcher is available');

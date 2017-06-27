@@ -13,7 +13,7 @@ const app = express();
 const fibonacci = (n) => {
     if (n <= 0) return 0
     else if (n == 1) return 1
-    else return fibonacci(n-1) + fibonacci(n-2) 
+    else return fibonacci(n-1) + fibonacci(n-2)
 }
 
 const fibonacciOptimized = (n) => R.range(1, n+1).reduce(([a, b]) => [b, a + b], [0, 1])[0];
