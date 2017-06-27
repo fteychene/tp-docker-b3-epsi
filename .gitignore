@@ -1,9 +1,3 @@
 node_modules
 .vscode
 
-# Solution
-docker-compose.yaml
-dispatcher/Dockerfile
-
-# Local cache
-dispatcher/cache.json
