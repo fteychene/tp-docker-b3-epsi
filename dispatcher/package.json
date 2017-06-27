@@ -1,0 +1,23 @@
+{
+  "name": "fibonnaci-dispatcher",
+  "version": "0.0.1",
+  "description": "Cache and distribute fibonnaci workers",
+  "main": "src/dispatcher.js",
+  "dependencies": {
+    "cors": "^2.8.1",
+    "express": "^4.13.4",
+    "ioredis": "^3.1.1",
+    "node-fetch": "^1.7.1",
+    "ramda": "^0.24.1",
+    "rx": "^4.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "app": "node src/dispatcher.js"
+  },
+  "author": "fteychene",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "eslint": "^3.2.2"
+  }
+}
