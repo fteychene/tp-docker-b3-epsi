@@ -1,0 +1,57 @@
+version: '3.2'
+services:
+    dispatcher:
+        build: ./dispatcher/
+        depends_on:
+          - redis
+          - worker
+        ports: 
+          - "3000:3000"
+        volumes:
+          - cachevolume01:/var/cache
+        networks:
+          - worker
+          - redis
+          
+    redis:
+        image: redis:3.2-alpine
+        container_name: redis
+        networks:
+          - redis
+
+    worker:
+        build: ./worker
+        environment:
+          REDIS_HOST: "redis"
+          REDIS_PORT: "6379"
+        depends_on:
+          - redis
+        networks:
+          - worker
+          - redis
+        deploy:
+          replicas: 3
+          resources:
+            limits:
+              cpus: '1'
+              memory: 500M
+
+    monitor:
+        build: ./monitor
+        environment:
+          REDIS_HOST: "redis"
+          REDIS_PORT: "6379"
+        ports: 
+        - "3001:3000"
+        networks:
+          - redis
+        depends_on:
+          - redis
+volumes:
+  cachevolume01: {}
+
+networks:
+      worker:
+        driver: bridge
+      redis:
+        driver: bridge
