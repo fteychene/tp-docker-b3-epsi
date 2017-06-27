@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+  redis:
+    image: redis:latest
+    ports:
+    - "6379:6379"
+    networks:
+      - tpdocker
+
+  dispatcher:
+    image: tpdocker:latest
+    environment:
+    - REDIS_HOST=redis
+    - REDIS_PORT=6379
+    - WORKER_URL=http://worker:3000
+    depends_on:
+    - redis
+    ports:
+    - "3000:3000"
+    networks:
+      - tpdocker
+
+  worker:
+    image: worker:latest
+    environment:
+    - REDIS_HOST=redis
+    - REDIS_PORT=6379
+    depends_on:
+    - redis
+    deploy:
+      mode: replicated
+      replicas: 3
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+    networks:
+      tpdocker:
+        aliases:
+          - worker
+
+  monitor:
+    image: monitor:latest
+    depends_on:
+    - redis
+    environment:
+    - REDIS_HOST=redis
+    - REDIS_PORT=6379
+    ports:
+        - "4000:3000"
+    networks:
+      - tpdocker
+
+networks:
+    tpdocker:
